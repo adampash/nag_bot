@@ -8,6 +8,7 @@ days = ["SU", "M", "T", "W", "TH", "F", "S"]
 exports.initialize = ->
   Parse.Cloud.job "send_nags", (request, status) ->
     nags_sent = 0
+    now = new Date()
     JobStatus.findOrCreate().then (job_status) ->
       day = days[parseInt moment(new Date()).tz("America/New_York").format('d')]
       # current_time = moment(new Date()).tz("America/New_York").format('h:mmA')
@@ -33,7 +34,7 @@ exports.initialize = ->
         nags_sent++
 
       .then ->
-        job_status.set('last_run_at', new Date())
+        job_status.set('last_run_at', now)
         job_status.save()
       .then ->
         status.success "Sent #{nags_sent} nags"

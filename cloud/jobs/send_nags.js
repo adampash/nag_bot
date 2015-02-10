@@ -16,8 +16,9 @@
 
   exports.initialize = function() {
     return Parse.Cloud.job("send_nags", function(request, status) {
-      var nags_sent;
+      var nags_sent, now;
       nags_sent = 0;
+      now = new Date();
       return JobStatus.findOrCreate().then(function(job_status) {
         var current_time, day, last_run;
         day = days[parseInt(moment(new Date()).tz("America/New_York").format('d'))];
@@ -46,7 +47,7 @@
           });
           return nags_sent++;
         }).then(function() {
-          job_status.set('last_run_at', new Date());
+          job_status.set('last_run_at', now);
           return job_status.save();
         }).then(function() {
           return status.success("Sent " + nags_sent + " nags");
