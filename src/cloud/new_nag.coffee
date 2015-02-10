@@ -43,12 +43,30 @@ exports.initialize = ->
           return response.error "Make sure you've got all the pieces"
 
       channel = text.split(' ')[0]
-      days = text.match(/(on)?\s(everyday|weekdays|daily|[,|M|T|W|Th|F]*)\b/i)[2]
-      if days is "everyday" or days is "daily"
-        days = "m,t,w,th,f,s,su"
-      else if days is "weekdays"
-        days = "m,t,w,th,f"
-      days = days.toUpperCase().split(',')
+      days = text.match(/(on)?\s(everyday|weekdays|daily)\b/i)
+      if days?
+        days = days[2]
+        if days is "everyday" or days is "daily"
+          days = "mon,tue,wed,thu,fri,sat,sun"
+        else if days is "weekdays"
+          days = "mon,tue,wed,thu,fri"
+        days = days.toUpperCase().split(',')
+      else
+        days = []
+        if text.match(/\b((mon(day)?))\b/)
+          days.push "MON"
+        if text.match(/\b((tue((s)?day)?))\b/)
+          days.push "TUE"
+        if text.match(/\b((wed(nesday)?))\b/)
+          days.push "WED"
+        if text.match(/\b((thu((r(s)?(day)?)?)?))\b/)
+          days.push "THU"
+        if text.match(/\b((fri(day)?))\b/)
+          days.push "FRI"
+        if text.match(/\b((sat(urday)?))\b/)
+          days.push "SAT"
+        if text.match(/\b((sun(day)?))/)
+          days.push "SUN"
       time = text.match(/at\s(\d+(:\d\d)?[a|p]m)\b/i)[1]
       message = text.match(/to\s(.+)$/i)[1]
       nag = new Nag

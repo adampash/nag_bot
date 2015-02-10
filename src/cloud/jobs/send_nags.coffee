@@ -3,14 +3,14 @@ SlackNotify = require('cloud/lib/slack_notifier')
 Nag = require 'cloud/models/nag'
 JobStatus = require 'cloud/models/job_status'
 moment = require('cloud/lib/moment-timezone-with-data')
-days = ["SU", "M", "T", "W", "TH", "F", "S"]
+# days = ["SU", "M", "T", "W", "TH", "F", "S"]
 
 exports.initialize = ->
   Parse.Cloud.job "send_nags", (request, status) ->
     nags_sent = 0
     now = new Date()
     JobStatus.findOrCreate().then (job_status) ->
-      day = days[parseInt moment(new Date()).tz("America/New_York").format('d')]
+      day = moment(new Date()).tz("America/New_York").format('ddd').toUpperCase()
       # current_time = moment(new Date()).tz("America/New_York").format('h:mmA')
       last_run = parseInt(moment(job_status.get('last_run_at'))
         .tz("America/New_York")
