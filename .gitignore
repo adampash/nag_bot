@@ -1,0 +1,3 @@
+config/global.json
+cloud/config.js
+src/cloud/config.coffee
