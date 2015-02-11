@@ -27,7 +27,7 @@
   }, {
     create: function(text, creator) {
       var channel, days, message, nag, time;
-      channel = text.split(' ')[0];
+      channel = text.match(/\B[@#]\w+\b/)[0];
       days = this.getDays(text);
       time = text.match(/(at)?\s(\d+(:\d\d)?[a|p]m)\b/i)[2];
       message = text.match(/to\s(.+)$/i)[1];

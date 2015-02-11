@@ -31,7 +31,7 @@ module.exports = Nag = ParseFinder.extend "Nag",
 
 ,
   create: (text, creator) ->
-    channel = text.split(' ')[0]
+    channel = text.match(/\B[@#]\w+\b/)[0]
     days = @getDays(text)
     time = text.match(/(at)?\s(\d+(:\d\d)?[a|p]m)\b/i)[2]
     message = text.match(/to\s(.+)$/i)[1]
