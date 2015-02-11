@@ -1,5 +1,4 @@
 config = require 'cloud/config'
-SlackNotify = require('cloud/lib/slack_notifier')
 Nag = require 'cloud/models/nag'
 JobStatus = require 'cloud/models/job_status'
 moment = require('cloud/lib/moment-timezone-with-data')
@@ -25,12 +24,7 @@ exports.initialize = ->
         greaterThan: { time: last_run }
         lessThanOrEqualTo: { time: current_time }
       ).each (nag) ->
-        msg = nag.get 'message'
-        console.log "Nag time: #{nag.get 'time'}"
-        console.log "NAG: #{nag.get 'message'}"
-        SlackNotify.notify msg,
-          icon_emoji: ':nail_care:'
-          channel: nag.get('channel')
+        nag.notify()
         nags_sent++
 
       .then ->
