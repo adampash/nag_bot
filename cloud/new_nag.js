@@ -12,7 +12,7 @@
     return Parse.Cloud.define("new_nag", function(request, response) {
       var channel_id, text, token, user_name, _ref;
       _ref = request.params, token = _ref.token, text = _ref.text, channel_id = _ref.channel_id, user_name = _ref.user_name;
-      if (token === config.slack_token) {
+      if (token === config.slack.token) {
         if (text.split(' ').length < 6) {
           if (text === "help") {
             return response.success("Usage: /nag [#channel|@person] [everyday|weekdays|m,w|etc] at [4pm|7:30am] to [do something]");
