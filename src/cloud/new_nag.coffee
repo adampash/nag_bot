@@ -16,9 +16,6 @@ exports.initialize = ->
           return response.error "Make sure you've got all the pieces"
 
       Nag.create(text, user_name).then (nag) ->
-        # SlackNotify.notify 'testing',
-        #   icon_emoji: ':nail_care:'
-        #   channel: channel_id
         response.success "I'll remind #{nag.get 'channel'} to #{nag.get 'message'} on #{nag.get('days').join(',')} at #{nag.get('time')}"
 
 
