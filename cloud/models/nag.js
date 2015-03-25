@@ -15,7 +15,7 @@
       console.log("Nag time: " + (this.get('time')));
       console.log("NAG: " + (this.get('message')));
       return SlackNotify.notify(msg, {
-        icon_emoji: ':nail_care:',
+        icon_emoji: ':baby_bottle:',
         channel: this.get('channel')
       });
     },

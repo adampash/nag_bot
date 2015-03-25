@@ -16,7 +16,7 @@ module.exports = Nag = ParseFinder.extend "Nag",
     console.log "Nag time: #{@get 'time'}"
     console.log "NAG: #{@get 'message'}"
     SlackNotify.notify msg,
-      icon_emoji: ':nail_care:'
+      icon_emoji: ':baby_bottle:'
       channel: @get('channel')
 
   getStarter: ->
