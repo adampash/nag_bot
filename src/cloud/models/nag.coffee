@@ -2,8 +2,10 @@ ParseFinder = require 'cloud/mixins/finder'
 SlackNotify = require('cloud/lib/slack_notifier')
 
 module.exports = Nag = ParseFinder.extend "Nag",
+  icons: [':diaper:', ':baby_bottle', ':baby:']
+  randomIcon: ->
+    @icons[Math.floor(Math.random() * @icons.length)]
   notify: ->
-    # msg = @get 'message'
     you_or_person = if "@#{@get('created_by')}" is @get('channel') 
       "you"
     else
@@ -16,7 +18,7 @@ module.exports = Nag = ParseFinder.extend "Nag",
     console.log "Nag time: #{@get 'time'}"
     console.log "NAG: #{@get 'message'}"
     SlackNotify.notify msg,
-      icon_emoji: ':baby_bottle:'
+      icon_emoji: @icons
       channel: @get('channel')
 
   getStarter: ->

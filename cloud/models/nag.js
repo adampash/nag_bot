@@ -7,6 +7,10 @@
   SlackNotify = require('cloud/lib/slack_notifier');
 
   module.exports = Nag = ParseFinder.extend("Nag", {
+    icons: [':diaper:', ':baby_bottle', ':baby:'],
+    randomIcon: function() {
+      return this.icons[Math.floor(Math.random() * this.icons.length)];
+    },
     notify: function() {
       var channel_or_person, msg, you_or_person;
       you_or_person = ("@" + (this.get('created_by'))) === this.get('channel') ? "you" : this.get('created_by');
@@ -15,7 +19,7 @@
       console.log("Nag time: " + (this.get('time')));
       console.log("NAG: " + (this.get('message')));
       return SlackNotify.notify(msg, {
-        icon_emoji: ':baby_bottle:',
+        icon_emoji: this.icons,
         channel: this.get('channel')
       });
     },
